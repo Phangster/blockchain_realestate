@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropertyOwnership from "../../contracts/PropertyOwnership.json";
+import RealEstate from "../../contracts/RealEstate.json";
 import getWeb3 from "../../getWeb3";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -11,10 +11,10 @@ class RegisterProperty extends Component {
       storageValue: 0, 
       web3: null, 
       accounts: null, 
-      contract: null, 
       location: null,
       cost: null,
       currentAddress: null,
+      propertyOwner: null,
 
       blockNumber: null,
       transactionHash: null,
@@ -23,6 +23,9 @@ class RegisterProperty extends Component {
       contractAddress: null,
       gasUsed: null,
       logs:[],
+
+      newOwnerAddress: null,
+      propertyId: null
     };
   }
 
@@ -36,15 +39,16 @@ class RegisterProperty extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = PropertyOwnership.networks[networkId];
-      const instance = new web3.eth.Contract(
-        PropertyOwnership.abi,
-        deployedNetwork && deployedNetwork.address,
-      );
+      const deployedNetwork = RealEstate.networks[networkId];
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, currentAddress: accounts[0], contract: instance });
+      this.setState({ 
+        web3: web3, 
+        accounts: accounts, 
+        currentAddress: accounts[0], 
+        deployedNetwork: deployedNetwork 
+      });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -56,19 +60,48 @@ class RegisterProperty extends Component {
 
 
   createProperty = async (location, cost ) =>{
-     const { accounts, contract} = this.state;
+    const { accounts, deployedNetwork, web3 } = this.state;
+
+    const contract = new web3.eth.Contract(
+      RealEstate.abi,
+      deployedNetwork && deployedNetwork.address,
+    );
 
     await contract.methods._createProperty(location, cost)
     .send(
-      { from: accounts[0], gas: 800000 })
+      { from: accounts[0], gas: 800000, value: cost })
     .then((txReceipt) =>
       this.setState({
         transactionHash: txReceipt.transactionHash,
         blockNumber: txReceipt.blockNumber,
         from: txReceipt.from,
-        to: txReceipt.to
+        to: txReceipt.to,
+        logs: txReceipt.logs
       })
     )
+    console.log(this.state)
+  }
+
+  transferOwnership = async (newOwnerAddress, propertyId) => {
+    const {contract, currentAddress} = this.state;
+    await contract.methods._transferProperty(newOwnerAddress, propertyId)
+    .send(
+      { from: currentAddress, to: newOwnerAddress, gas: 800000})
+    .then((txReceipt) =>
+      this.setState({
+        transactionHash: txReceipt.transactionHash,
+        blockNumber: txReceipt.blockNumber,
+        from: txReceipt.from,
+        to: txReceipt.to,
+        logs: txReceipt.logs
+      })
+    )
+    console.log(this.state)
+  }
+
+  getPropertyDetails = async (address, id) => {
+    const {contract} = this.state;
+    await contract.methods._getPropertyDetails(address, id);
   }
 
   gweiToEther(amount) {
@@ -78,19 +111,49 @@ class RegisterProperty extends Component {
     return cost
   }
 
-  handleSubmit(event) {
+  handleSubmitCreateProperty(event) {
     event.preventDefault();
     const location = this.state.location;
     const cost = this.state.cost
     this.createProperty(location, cost)
-
     console.log(location)
     console.log(cost)
 
   }
 
+  handleChangeCreateProperty(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 
-  handleChange(e) {
+  handleSubmitTransferOwnership(event) {
+    event.preventDefault();
+    const newOwnerAddress = this.state.newOwnerAddress;
+    const propertyId = this.state.propertyId;
+
+    this.transferOwnership(newOwnerAddress, propertyId);
+    console.log(newOwnerAddress);
+    console.log(propertyId);
+  }
+
+  handleChangeTransferOwnership(e){
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleSubmitGetProperty(event) {
+    event.preventDefault();
+    const address = this.state.propertyOwner;
+    const id = this.state.propertyId;
+
+    this.getPropertyDetails(address, id);
+    console.log(address);
+    console.log(id);
+  }
+
+  handleChangeGetProperty(e){
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -101,23 +164,58 @@ class RegisterProperty extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
+      <div className="App" style={{display: 'grid'}}>
         <h1>Register a Property</h1>
         <p>My Account: {this.state.currentAddress}</p>
-        <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-          <form style={{height: '50vh', width: '50%', alignItems: 'center', boxShadow: '10px 10px 5px grey'}} onSubmit={this.handleSubmit.bind(this)}>
+        <div style={{width: '100%', display: 'grid', justifyContent: 'center'}}>
+          <form style={{width: '400px', alignItems: 'center', boxShadow: '10px 10px 5px grey', paddingBottom: '30px'}} onSubmit={this.handleSubmitCreateProperty.bind(this)}>
             <div style={{marginTop: '20px'}}>
-              <TextField id="filled-basic" label="Location" variant="outlined" type="text" name="location" placeholder="eg. Pasir Ris, Tampines" value={this.state.location} onChange={this.handleChange.bind(this)} />
+              <TextField id="filled-basic" label="Location" variant="outlined" type="text" name="location" placeholder="eg. Pasir Ris, Tampines" value={this.state.location} onChange={this.handleChangeCreateProperty.bind(this)} />
             </div >
             <div style={{marginTop: '20px'}}>
-              <TextField id="filled-basic" label="Cost" variant="outlined" type="text" name="cost" placeholder="asking price" value={this.state.cost} onChange={this.handleChange.bind(this)}/>
+              <TextField id="filled-basic" label="Cost" variant="outlined" type="text" name="cost" placeholder="asking price" value={this.state.cost} onChange={this.handleChangeCreateProperty.bind(this)}/>
             </div>
             <div style={{marginTop: '20px'}}>
               <Button variant="contained" color="primary" type="submit" value="Submit">Submit</Button>
             </div>
           </form>
+          <div style={{paddingLeft: '20px'}}>
+            <h3>Transaction Hash</h3>
+            <h5>{this.state.transactionHash}</h5>
+          </div>
         </div>
-        
+        <h1>Transfer a Property</h1>
+        <div style={{width: '100%', display: 'grid', justifyContent: 'center'}}>
+          <form style={{width: '400px', alignItems: 'center', boxShadow: '10px 10px 5px grey', paddingBottom: '30px'}} onSubmit={this.handleSubmitTransferOwnership.bind(this)}>
+            <div style={{marginTop: '20px'}}>
+              <TextField id="filled-basic" label="To Address" variant="outlined" type="text" name="newOwnerAddress" placeholder="eg. 0x38euhfj....." value={this.state.newOwnerAddress} onChange={this.handleChangeTransferOwnership.bind(this)} />
+            </div >
+            <div style={{marginTop: '20px'}}>
+              <TextField id="filled-basic" label="Property ID" variant="outlined" type="text" name="propertyId" placeholder="eg. 1, 2, 3 ..." value={this.state.propertyId} onChange={this.handleChangeTransferOwnership.bind(this)} />
+            </div >
+            <div style={{marginTop: '20px'}}>
+              <Button variant="contained" color="primary" type="submit" value="Submit">Submit</Button>
+            </div>
+          </form>
+          <div style={{paddingLeft: '20px'}}>
+            <h3>New Owner</h3>
+            <h5>{this.state.newOwnerAddress}</h5>
+          </div>
+        </div>
+        <h1>Get a Property</h1>
+        <div style={{width: '100%', display: 'grid', justifyContent: 'center'}}>
+          <form style={{width: '400px', alignItems: 'center', boxShadow: '10px 10px 5px grey', paddingBottom: '30px'}} onSubmit={this.handleSubmitGetProperty.bind(this)}>
+            <div style={{marginTop: '20px'}}>
+              <TextField id="filled-basic" label="Land Owner Address" variant="outlined" type="text" name="propertyOwner" placeholder="eg. 0x38euhfj....." value={this.state.propertyOwner} onChange={this.handleChangeGetProperty.bind(this)} />
+            </div >
+            <div style={{marginTop: '20px'}}>
+              <TextField id="filled-basic" label="Property ID" variant="outlined" type="text" name="propertyId" placeholder="eg. 1, 2, 3 ..." value={this.state.propertyId} onChange={this.handleChangeGetProperty.bind(this)} />
+            </div >
+            <div style={{marginTop: '20px'}}>
+              <Button variant="contained" color="primary" type="submit" value="Submit">Submit</Button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

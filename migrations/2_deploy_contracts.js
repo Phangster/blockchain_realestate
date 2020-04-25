@@ -1,5 +1,5 @@
-var PropertyOwnership = artifacts.require("./PropertyOwnership.sol");
+var RealEstate = artifacts.require("./RealEstate");
 
 module.exports = function(deployer) {
-  deployer.deploy(PropertyOwnership);
+  deployer.deploy(RealEstate);
 };
