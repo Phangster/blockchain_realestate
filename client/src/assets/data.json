@@ -1,0 +1,482 @@
+[
+    {
+        "title": "Brush Technique",
+        "facilitator": "Susan Fischer",
+        "duration": "1 hour",
+        "category": "Art",
+        "slots": 22,
+        "url": "/images/BrushTechnique.jpg",
+        "id": 1,
+        "description": "Join me for the first session in our series of “How To” instructional workshops. In this session, we’ll be discussing paint brushes; how to select the right brush, how to care for your brushes, and how to achieve various brush stroke effects. All materials will be delivered to you upon enrolment. I will answer as many questions as possible relevant to the topic as time allows.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Choosing Colors ",
+        "facilitator": "Mary Tenaski",
+        "duration": "1.5 hour",
+        "category": "Art",
+        "slots": 12,
+        "url": "/images/ChoosingColors.jpg",
+        "id": 2,
+        "description": "We will be exploring the differnet possible color combinations and how humans respond to these colors. The meaning behind each color on the spectrum might surpruse. So if you are ready to dive deep and understand how to select the right color for the right purpose, join me in this class!",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 5,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Manual DSLR Photography  ",
+        "facilitator": "Mary Tenaski",
+        "duration": "2 hour",
+        "category": "Photography",
+        "slots": 12,
+        "url": "/images/MasteringDSLR.jpeg",
+        "id": 3,
+        "description": "If you ever wanted to become a professional photography but not sure where to start, this is the best place because I will be covering all the basics of the DSLR.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Bicep Pump",
+        "facilitator": "Bryan Phang",
+        "duration": "1 hour",
+        "category": "Fitness",
+        "slots": 28,
+        "url": "/images/BicepPump.jpg",
+        "id": 4,
+        "description": "Join me and get ready to grow your biceps, some say that this is the most important part of a guy's physique. Look no further, in this session i will be guiding you through a set of exercises and giving you tips on how to tackle the biceps effectively.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Abs Workout",
+        "facilitator": "Bryan Phang",
+        "duration": "1 hour",
+        "category": "Fitness",
+        "slots": 12,
+        "url": "/images/AbsWorkout.jpg",
+        "id": 5,
+        "description": "Join me and get ready to grow your abs, some say that this is the most important part of a guy's physique. Look no further, in this session i will be guiding you through a set of exercises and giving you tips on how to tackle the abs effectively.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 5,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Chest Pump",
+        "facilitator": "Bryan Phang",
+        "duration": "1 hour",
+        "category": "Fitness",
+        "slots": 12,
+        "url": "/images/ChestPump.jpg",
+        "id": 6,
+        "description": "Join me and get ready to grow your chest, some say that this is the most important part of a guy's physique. Look no further, in this session i will be guiding you through a set of exercises and giving you tips on how to tackle the chest effectively.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 3,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Audio Engineering",
+        "facilitator": "Drake Watkins",
+        "duration": "1 hour",
+        "category": "Technology",
+        "slots": 10,
+        "url": "/images/AudioEngineering.jpg",
+        "id": 7,
+        "description": "In this one time, hour long class, students will get an introductory look at the wide world of audio engineering.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Intro to Sushi Making",
+        "facilitator": "Andy Suarez",
+        "duration": "1 hour",
+        "category": "Cooking",
+        "slots": 10,
+        "url": "/images/SushiMaking.jpg",
+        "id": 8,
+        "description": "Students will learn by watching and interacting with a full hands on demonstration on knife skills and sushi rolling. Students will be able to follow along on cutting their vegetables and cooking their sushi rice as well as rolling techniques. Topics that will be covered during this class are what ingredients can we use to make sushi and how to use them to their extend if you have any leftover ingredients. Recipes will be given and it will cover the many things you can put in sushi and how to cook sushi rice and what to purchase to make this again. ",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "How To Make Awesome Animated Movies",
+        "facilitator": "Cody Zervas",
+        "duration": "1 hour",
+        "category": "Art",
+        "slots": 10,
+        "url": "/images/AnimatedMovies.jpg",
+        "id": 9,
+        "description": "Students will learn the basics of animation. Over the course of 5 weeks they will go from having no former knowledge to having a grasp over the major concepts of the art form and knowing how to create their very own short animated films. This class gives students the skills to turn whatever fantastical things they can imagine into reality.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 5,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Mastering Pre-Algebra And Algebra Essentials",
+        "facilitator": "Fernando Millan",
+        "duration": "1 hour",
+        "category": "Education",
+        "slots": 11,
+        "url": "/images/MasteringAlgebra.jpeg",
+        "id": 10,
+        "description": "The way I teach this skill is very easy to learn and your child will be prepared for success in Algebra. I will show students how to do an exercise on the white board. They will learn  by actually doing example exercises during class. I will repeat with another exercise and will explain as many times as needed until the students are ready to do the exercises by themselves. Once started, I will check their answers for accuracy and follow up with any necessary explanations. I encourage all participants to try as many exercises as possible. I follow up the class with an upload of homework with the solutions.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Introduction to French",
+        "facilitator": "Samantha Star, BEd",
+        "duration": "1 hour",
+        "category": "Education",
+        "slots": 11,
+        "url": "/images/IntroToFrench.jpg",
+        "id": 11,
+        "description": "Students will learn basic vocabulary including numbers, colors, greetings etc. Together we will travel to Quebec and France and use our new vocabulary with locals (through the magic of the internet, no airfare required). We will learn using songs, games and most importantly, fun. Every class will begin with a review of the previous class, the best way to learn a new language is to practice and reinforce.",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    },
+    {
+        "title": "Intro to Card Magic",
+        "facilitator": "Patrick Adams",
+        "duration": "1.5 hour",
+        "category": "Others",
+        "slots": 11,
+        "url": "/images/IntroToMagic.jpeg",
+        "id": 12,
+        "description": "At the beginning of each class I will demonstrate to the group the topic that we will be discussing. I will give an overview of the history and uses of each technique we will be using. Each week students will have the opportunity to perform for the group to demonstrate what they have learned and practiced.  The only homework that will be assigned is to practice. Practice is what makes performing magic fun!",
+        "learningObjective": "",
+        "resources": "",
+        "timeCommitment": "",
+        "rating": 4,
+        "schedules": [
+            {
+                "day": "Mon, Apr 27",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 22
+            },
+            {
+                "day": "Tue, Apr 28",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 19
+            },
+            {
+                "day": "Thu, Apr 30",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 13
+            },
+            {
+                "day": "Fri, May 1",
+                "frequency": "2 times/week",
+                "timing": "1:00PM - 2:00PM",
+                "slots": 8
+            }
+        ]
+    }
+]
