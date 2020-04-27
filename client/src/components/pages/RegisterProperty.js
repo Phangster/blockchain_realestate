@@ -325,7 +325,7 @@ class RegisterProperty extends Component {
             <h3>New Owner</h3>
             <Typography style={{overflow: 'scroll'}}>{this.state.newOwnerAddress}</Typography>
             <h3>Previous Owner</h3>
-            <Typography style={{overflow: 'scroll'}}>{this.state.prevOwnerAddress}</Typography>
+            <Typography style={{overflow: 'scroll'}}>{this.state.from}</Typography>
           </div>
           </Grid>
           <Grid container direction="row" justify="space-evenly">
