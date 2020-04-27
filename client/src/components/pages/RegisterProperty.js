@@ -112,7 +112,7 @@ class RegisterProperty extends Component {
     const address = this.state.propertyOwner;
     const id = this.state.propertyId;
 
-    this.getPropertyDetails(address, id);
+    this.getPropertyDetail(address, id);
     console.log(address);
     console.log(id);
   }
@@ -181,9 +181,9 @@ class RegisterProperty extends Component {
 
   // how to know if my contract has been successfully deployed ?
   // how to get the methods from the contract/ or why methods is not showing
-  getPropertyDetails(address, id){
+  getPropertyDetail(address, id){
 
-    const {deployedNetwork, web3} = this.state;
+    const {deployedNetwork, web3, accounts} = this.state;
 
     const contract = new web3.eth.Contract(
       RealEstate.abi,
@@ -191,9 +191,11 @@ class RegisterProperty extends Component {
     );
 
     try{
-      contract.methods._getPropertyDetails(address, id).call()
+      contract.methods._getPropertyDetail(address, id).call({
+        from: accounts[0]
+      })
       .then((res)=>{
-        console.log('hello')
+        console.log(res)
       });
     } catch (err) {
       console.log('errorMessage: ', err.message );
@@ -207,7 +209,7 @@ class RegisterProperty extends Component {
     const num = 10
     const address = this.state.currentAddress
     for(let i = 0; i<num; i++){
-      const res = await this.getPropertyDetails(address,[i])
+      const res = await this.getPropertyDetail(address,[i])
       this.setState({ listofproperty: this.state.listofproperty.push(res)})
     }
     console.log(this.state.listofproperty)
