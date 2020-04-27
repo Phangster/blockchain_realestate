@@ -8,9 +8,11 @@ class RegisterProperty extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      storageValue: 0, 
+      storageValue: null, 
       web3: null, 
+      contract: null,
       accounts: null, 
+
       location: null,
       cost: null,
       currentAddress: null,
@@ -66,6 +68,9 @@ class RegisterProperty extends Component {
       RealEstate.abi,
       deployedNetwork && deployedNetwork.address,
     );
+    
+    this.setState({contract: contract})
+    console.log(this.state.contract)
 
     await contract.methods._createProperty(location, cost)
     .send(
@@ -76,7 +81,8 @@ class RegisterProperty extends Component {
         blockNumber: txReceipt.blockNumber,
         from: txReceipt.from,
         to: txReceipt.to,
-        logs: txReceipt.logs
+        logs: txReceipt.logs,
+        contractAddress: txReceipt.contractAddress
       })
     )
     console.log(this.state)
@@ -99,9 +105,19 @@ class RegisterProperty extends Component {
     console.log(this.state)
   }
 
+  // how to know if my contract has been successfully deployed ?
+  // how to get the methods from the contract/ or why methods is not showing
   getPropertyDetails = async (address, id) => {
-    const {contract} = this.state;
-    await contract.methods._getPropertyDetails(address, id);
+
+    const {deployedNetwork, web3 } = this.state;
+
+    const contract = new web3.eth.Contract(
+      RealEstate.abi,
+      deployedNetwork && deployedNetwork.address,
+    );
+
+    const response = await contract.methods._getPropertyDetails(address, id).call();
+    this.setState({ storageValue: response });
   }
 
   gweiToEther(amount) {
@@ -215,6 +231,10 @@ class RegisterProperty extends Component {
               <Button variant="contained" color="primary" type="submit" value="Submit">Submit</Button>
             </div>
           </form>
+          <div style={{paddingLeft: '20px'}}>
+            <h3>Property</h3>
+            <h5>{this.state.storageValue}</h5>
+          </div>
         </div>
       </div>
     );
