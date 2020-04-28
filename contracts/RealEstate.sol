@@ -58,6 +58,10 @@ contract RealEstate is Ownable {
     function _numOfPropertyOwnerHas(address _owner) public view returns (uint){
         return (property[_owner].length);
     }
+
+    function _getCurrentPrice(address _owner, uint propertyId) public view returns (uint) {
+        return (property[_owner][propertyId].cost);
+    }
   
     //gets the details of the property
     function _getPropertyDetail(address assetOwner, uint propertyID) public view returns (address, address, string memory, uint, uint, uint){
@@ -68,8 +72,57 @@ contract RealEstate is Ownable {
         property[assetOwner][propertyID].cost,
         property[assetOwner][propertyID].state);
     }
-  
-// function _currentPropertyOwner(uint propertyID) public view returns (address){
+
+    function _transferProperty(address payable _buyer, uint assetIdx) public payable returns (uint balance){
+        uint i;
+        for(i=0; i<(property[msg.sender].length); i++){
+            if(property[msg.sender][i].ID == assetIdx){
+                require(msg.value >= property[msg.sender][i].cost*1e18);
+                Asset memory myAsset = Asset({
+                    ownerAddress: _buyer,
+                    prevAddress: msg.sender,
+                    location: property[msg.sender][i].location,
+                    ID: property[msg.sender][i].ID,
+                    cost: property[msg.sender][i].cost,
+                    state: property[msg.sender][i].state++
+                });
+            property[_buyer].push(myAsset);
+            delete property[msg.sender][i];
+            balances[msg.sender] -= property[msg.sender][i].cost;
+            _buyer.transfer(property[msg.sender][i].cost*1e18);
+            emit TransferAsset(msg.sender, _buyer, assetIdx);
+            
+            return balances[msg.sender];
+            }
+        }
+    }
+
+    function _buyAProperty(address payable _seller, uint assetIdx) public payable returns (uint balance){
+        uint i;
+        for(i=0; i<(property[_seller].length); i++){
+            if(property[_seller][i].ID == assetIdx){    
+                require(msg.value >= property[_seller][i].cost*1e18);
+                Asset memory myAsset = Asset({
+                    ownerAddress: msg.sender,
+                    prevAddress: _seller,
+                    location: property[_seller][i].location,
+                    ID: property[_seller][i].ID,
+                    cost: property[_seller][i].cost,
+                    state: property[_seller][i].state++
+                });
+            property[msg.sender].push(myAsset);
+            delete property[_seller][i];
+            balances[_seller] -= property[_seller][i].cost*1e18;
+            msg.sender.transfer(property[_seller][i].cost*1e18);
+            emit TransferAsset(_seller, msg.sender, assetIdx);
+            
+            return balances[msg.sender];
+            }
+        
+        }
+    }
+
+// function _currentPropertyOwned(uint propertyID) public view returns (address){
 //     //for loop to search for all the owner property id match
 //     uint i;
 //     for(i = 0; i<property[msg.sender].length; i++ ){
@@ -89,7 +142,6 @@ contract RealEstate is Ownable {
 //       return(count);
 //   }
 
-
 // function _getAllPropertiesInOwnerArray(address _owner) public view returns (uint){
 //     uint i;
 //     uint j;
@@ -100,28 +152,4 @@ contract RealEstate is Ownable {
 //     }
 // }
 
-function _transferProperty(address payable _buyer, uint assetIdx) public payable returns (uint balance){
-    uint i;
-    for(i=0; i<(property[msg.sender].length); i++){
-        if(property[msg.sender][i].ID == assetIdx){
-            require(msg.value >= property[msg.sender][i].cost*1e18);
-            Asset memory myAsset = Asset({
-                ownerAddress: _buyer,
-                prevAddress: msg.sender,
-                location: property[msg.sender][i].location,
-                ID: property[msg.sender][i].ID,
-                cost: property[msg.sender][i].cost,
-                state: property[msg.sender][i].state++
-            });
-            property[_buyer].push(myAsset);
-            delete property[msg.sender][i];
-            balances[msg.sender] -= property[msg.sender][i].cost;
-            _buyer.transfer(property[msg.sender][i].cost*1e18);
-            emit TransferAsset(msg.sender, _buyer, assetIdx);
-            
-            return balances[msg.sender];
-        }
-        
-    }
-  }
 }

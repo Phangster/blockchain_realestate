@@ -23,23 +23,33 @@ class RegisterProperty extends Component {
       cost: null,
       currentAddress: null,
       propertyOwner: null,
+      from: null,
 
+      //createProperty register a new property onto the contract
+      createCost: null,
       blockNumber: null,
       transactionHash: null,
-      from: null,
-      to: null,
       contractAddress: null,
-      gasUsed: null,
-      logs:[],
-      price: null,
 
+      //transferOwnership shows the next owner address that the property has been transffered to
       newOwnerAddress: null,
       prevOwnerAddress: null,
-      propertyId: null,
       propertyIdTrans: null,
+      priceTrans: null,
 
-      listofproperty: [],
+      //getNumProperties shows the number of property the current owner have created in his address
       numProp: null,
+
+      //getCurrentPrice
+      currentPrice: null,
+
+      //getPropertyDetail gets the details of the property
+      getLocation: null,
+      getId: null,
+      getCost: null,
+
+      //shared state between transfer and get property
+      currentState: null,
     };
   }
 
@@ -97,8 +107,6 @@ class RegisterProperty extends Component {
     const propertyIdTrans = this.state.propertyIdTrans;
 
     this.transferOwnership(newOwnerAddress, propertyIdTrans);
-    console.log(newOwnerAddress);
-    console.log(propertyIdTrans);
   }
 
   handleChangeTransferOwnership(e){
@@ -137,33 +145,35 @@ class RegisterProperty extends Component {
     .send(
       { from: accounts[0], gas: 800000, value: cost })
     .then((txReceipt) =>
-      this.setState({
-        transactionHash: txReceipt.transactionHash,
-        blockNumber: txReceipt.blockNumber,
-        from: txReceipt.from,
-        to: txReceipt.to,
-        logs: txReceipt.logs,
-        contractAddress: txReceipt.contractAddress,
-        price: cost,
-      })
-      );
+    console.log(txReceipt)
+      // this.setState({
+      //   transactionHash: txReceipt.transactionHash,
+      //   blockNumber: txReceipt.blockNumber,
+      //   from: txReceipt.from,
+      //   createCost: cost,
+      //   currentState: 0,
+      // })
+    );
+    console.log('state from create property', this.state)
     } catch (err) {
       console.log('errorMessage: ', err.message );
     }
   }
 
   transferOwnership = async (newOwnerAddress, propertyId) => {
-    const {deployedNetwork, web3, currentAddress, price} = this.state;
-
+    const {deployedNetwork, web3, currentAddress, priceTrans} = this.state;
     const contract = new web3.eth.Contract(
       RealEstate.abi,
       deployedNetwork && deployedNetwork.address,
     );
+  
+    console.log('price from transer_', priceTrans)
+    console.log('new owner', newOwnerAddress)
 
     try{
       await contract.methods._transferProperty(newOwnerAddress, propertyId)
     .send(
-      { from: currentAddress, to: newOwnerAddress, gas: 800000, value: price})
+      { from: currentAddress, to: newOwnerAddress, gas: 800000, value: priceTrans})
     .then((txReceipt) =>
       this.setState({
         transactionHash: txReceipt.transactionHash,
@@ -179,12 +189,10 @@ class RegisterProperty extends Component {
     }
   }
 
-  // how to know if my contract has been successfully deployed ?
-  // how to get the methods from the contract/ or why methods is not showing
-  getPropertyDetail(address, id){
+
+  getPropertyDetail = async(address, id) => {
 
     const {deployedNetwork, web3, accounts} = this.state;
-
     const contract = new web3.eth.Contract(
       RealEstate.abi,
       deployedNetwork && deployedNetwork.address,
@@ -196,6 +204,12 @@ class RegisterProperty extends Component {
       })
       .then((res)=>{
         console.log(res)
+        this.setState({
+          getLocation: res[2],
+          getId: res[3],
+          getCost: res[4],
+          currentState: res[5]
+        })
       });
     } catch (err) {
       console.log('errorMessage: ', err.message );
@@ -217,7 +231,7 @@ class RegisterProperty extends Component {
   */
 
   getNumProperties = async() => {
-    const {deployedNetwork, web3 } = this.state;
+    const {deployedNetwork, web3, accounts} = this.state;
 
     const contract = new web3.eth.Contract(
       RealEstate.abi,
@@ -225,9 +239,37 @@ class RegisterProperty extends Component {
     );
 
     try{
-      await contract.methods.__numOfPropertyOwnerHas().call()
+      await contract.methods._numOfPropertyOwnerHas(this.state.currentAddress).call({
+        from: accounts[0]
+      })
       .then((res)=>{
         console.log(res)
+        this.setState({
+          numProp: res
+        })
+      });
+    } catch (err) {
+      console.log('errorMessage: ', err.message );
+    }
+  }
+
+  getCurrentPrice = async(_owner, _propertyId) => {
+    const {deployedNetwork, web3, accounts} = this.state;
+
+    const contract = new web3.eth.Contract(
+      RealEstate.abi,
+      deployedNetwork && deployedNetwork.address,
+    );
+
+    try{
+      await contract.methods._getCurrentPrice(_owner, _propertyId).call({
+        from: accounts[0]
+      })
+      .then((res)=>{
+        console.log(res)
+        this.setState({
+          currentPrice: res
+        })
       });
     } catch (err) {
       console.log('errorMessage: ', err.message );
@@ -240,23 +282,18 @@ class RegisterProperty extends Component {
     return web3.eth.getBalance(address)
   }
 
-  gweiToEther(amount) {
-    const {web3} = this.state;
-    const cost = web3.utils.fromWei(amount, 'ether');
-    console.log(cost)
-    return cost
-  }
-
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App" style={{display: 'grid'}}>
+      <div className="App">
         <h3>Current Onwer</h3>
         <h2>{this.state.currentAddress}</h2>
-        <div><Button variant="contained" color="primary" onClick={() => this.getNumProperties()} >NUM PROPERTIES</Button></div>
-        <h2>{this.state.numProp}</h2>
+        <Grid container direction="row" justify="center">
+          <div ><Button variant="contained" color="primary" onClick={() => this.getNumProperties()} >Number of properties</Button></div>
+          <div style={{marginLeft: '2rem',padding:'0.5rem', fontSize:'1.33em'}}>{this.state.numProp}</div>
+        </Grid>
         <Grid container direction="column" justify="space-evenly" alignItems="center" marginTop="5rem">
           <Grid container direction="row" justify="space-evenly" style={{marginBottom:"2rem"}}>
             <Card style={{width: '400px'}} spacing={2}>
@@ -275,7 +312,7 @@ class RegisterProperty extends Component {
                       <TextField id="filled-basic" label="Location" variant="outlined" type="text" name="location" placeholder="eg. Pasir Ris, Tampines" value={this.state.location} onChange={this.handleChangeCreateProperty.bind(this)} />
                     </div >
                     <div style={{marginTop: '20px'}}>
-                      <TextField id="filled-basic" label="Cost" variant="outlined" type="text" name="cost" placeholder="asking price" value={this.state.price} onChange={this.handleChangeCreateProperty.bind(this)}/>
+                      <TextField id="filled-basic" label="Cost" variant="outlined" type="text" name="cost" placeholder="asking price" value={this.state.cost} onChange={this.handleChangeCreateProperty.bind(this)}/>
                     </div>
                     <div style={{marginTop: '20px'}}>
                       <Button variant="contained" color="primary" type="submit" value="Submit" >Submit</Button>
@@ -293,7 +330,9 @@ class RegisterProperty extends Component {
               <h3>Owner</h3>
               <Typography style={{overflow: 'scroll'}}>{this.state.from}</Typography>
               <h3>Price</h3>
-              <Typography style={{overflow: 'scroll'}}>{this.state.cost}</Typography>
+              <Typography style={{overflow: 'scroll'}}>{this.state.createCost}</Typography>
+              <h3>State</h3>
+              <Typography style={{overflow: 'scroll'}}>{this.state.currentState}</Typography>
             </div>
           </Grid>
           <Grid container direction="row" justify="space-evenly" style={{marginBottom:"2rem"}}>
@@ -310,11 +349,19 @@ class RegisterProperty extends Component {
                 </Typography>
                 <form onSubmit={this.handleSubmitTransferOwnership.bind(this)}>
                   <div style={{marginTop: '20px'}}>
+                    <TextField id="filled-basic" label="Property ID" variant="outlined" type="text" name="propertyIdTrans" placeholder="eg. 1, 2, 3 ..." value={this.state.propertyIdTrans} onChange={this.handleChangeTransferOwnership.bind(this)} />
+                  </div >
+                  <div>
+                    <Button style={{marginTop:'1rem'}} variant="contained" color="primary" onClick={() => this.getCurrentPrice(this.state.currentAddress,this.state.propertyIdTrans)} >Get Current Price</Button>
+                    <div style={{padding:'0.5rem', fontSize:'2em'}}>{this.state.currentPrice}</div>
+                  </div>
+                  <div style={{marginTop: '20px'}}>
                     <TextField id="filled-basic" label="To Address" variant="outlined" type="text" name="newOwnerAddress" placeholder="eg. 0x38euhfj....." value={this.state.newOwnerAddress} onChange={this.handleChangeTransferOwnership.bind(this)} />
                   </div >
                   <div style={{marginTop: '20px'}}>
-                    <TextField id="filled-basic" label="Property ID" variant="outlined" type="text" name="propertyIdTrans" placeholder="eg. 1, 2, 3 ..." value={this.state.propertyIdTrans} onChange={this.handleChangeTransferOwnership.bind(this)} />
-                  </div >
+                    <Typography style={{marginBottom: '1rem'}}>Must be higher or equal to the current price</Typography>
+                    <TextField id="filled-basic" label="Cost" variant="outlined" type="text" name="priceTrans" placeholder="offer price" value={this.state.priceTrans} onChange={this.handleChangeCreateProperty.bind(this)}/>
+                  </div>
                   <div style={{marginTop: '20px'}}>
                     <Button variant="contained" color="primary" type="submit" value="Submit">Submit</Button>
                   </div>
@@ -323,9 +370,9 @@ class RegisterProperty extends Component {
             </CardActionArea>
           </Card>
           <div style={{width:"400px"}}>
-            <h1>TRANSFERING</h1>
+            <h1>TRANSFERED</h1>
             <h3>New Owner</h3>
-            <Typography style={{overflow: 'scroll'}}>{this.state.newOwnerAddress}</Typography>
+            <Typography style={{overflow: 'scroll'}}>{this.state.to}</Typography>
             <h3>Previous Owner</h3>
             <Typography style={{overflow: 'scroll'}}>{this.state.from}</Typography>
           </div>
@@ -357,8 +404,15 @@ class RegisterProperty extends Component {
             </CardActionArea>
           </Card>
           <div style={{width:"400px"}}>
-            <h3>Property</h3>
-            <h5>{this.state.storageValue}</h5>
+            <h1>PROPERTY DETAILS</h1>
+            <h3>Location</h3>
+            <Typography style={{overflow: 'scroll'}}>{this.state.getLocation}</Typography>
+            <h3>Property ID</h3>
+            <Typography style={{overflow: 'scroll'}}>{this.state.getId}</Typography>
+            <h3>Price</h3>
+            <Typography style={{overflow: 'scroll'}}>{this.state.getCost}</Typography>
+            <h3>State</h3>
+            <Typography style={{overflow: 'scroll'}}>{this.state.currentState}</Typography>
           </div>
           </Grid>
         </Grid>
