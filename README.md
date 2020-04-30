@@ -37,7 +37,6 @@ Ensure your Ganache is opened in your desktop
 rm -rf build/
 truffle compile 
 truffle migrate 
-
 ```
 **Setting up UI:**
 
@@ -47,16 +46,14 @@ Go to your project folder in terminal then execute :
 cd client
 npm install
 npm run start
-
 ```
 
-**To run test cases**
+**Run Test Cases:**
 
 Go to your project folder in terminal then execute :
 
 ```
 truffle test
-
 ```
 
 ---
