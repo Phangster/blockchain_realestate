@@ -145,14 +145,13 @@ class RegisterProperty extends Component {
     .send(
       { from: accounts[0], gas: 800000, value: cost })
     .then((txReceipt) =>
-    console.log(txReceipt)
-      // this.setState({
-      //   transactionHash: txReceipt.transactionHash,
-      //   blockNumber: txReceipt.blockNumber,
-      //   from: txReceipt.from,
-      //   createCost: cost,
-      //   currentState: 0,
-      // })
+      this.setState({
+        transactionHash: txReceipt.transactionHash,
+        blockNumber: txReceipt.blockNumber,
+        from: txReceipt.from,
+        createCost: cost,
+        currentState: 0,
+      })
     );
     console.log('state from create property', this.state)
     } catch (err) {
@@ -180,7 +179,8 @@ class RegisterProperty extends Component {
         blockNumber: txReceipt.blockNumber,
         from: txReceipt.from,
         to: txReceipt.to,
-        logs: txReceipt.logs
+        logs: txReceipt.logs,
+        newOwnerAddress: newOwnerAddress
       })
     )
     console.log(this.state)
@@ -292,7 +292,7 @@ class RegisterProperty extends Component {
         <h2>{this.state.currentAddress}</h2>
         <Grid container direction="row" justify="center">
           <div ><Button variant="contained" color="primary" onClick={() => this.getNumProperties()} >Number of properties</Button></div>
-          <div style={{marginLeft: '2rem',padding:'0.5rem', fontSize:'1.33em'}}>{this.state.numProp}</div>
+          <div style={{marginBottom: '2rem', marginLeft: '2rem',padding:'0.5rem', fontSize:'1.33em'}}>{this.state.numProp}</div>
         </Grid>
         <Grid container direction="column" justify="space-evenly" alignItems="center" marginTop="5rem">
           <Grid container direction="row" justify="space-evenly" style={{marginBottom:"2rem"}}>
@@ -345,7 +345,7 @@ class RegisterProperty extends Component {
                 />
                 <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Transfer a Property
+                  Buy a Property
                 </Typography>
                 <form onSubmit={this.handleSubmitTransferOwnership.bind(this)}>
                   <div style={{marginTop: '20px'}}>
@@ -370,9 +370,9 @@ class RegisterProperty extends Component {
             </CardActionArea>
           </Card>
           <div style={{width:"400px"}}>
-            <h1>TRANSFERED</h1>
+            <h1>PURCHASING RECIEPT</h1>
             <h3>New Owner</h3>
-            <Typography style={{overflow: 'scroll'}}>{this.state.to}</Typography>
+            <Typography style={{overflow: 'scroll'}}>{this.state.newOwnerAddress}</Typography>
             <h3>Previous Owner</h3>
             <Typography style={{overflow: 'scroll'}}>{this.state.from}</Typography>
           </div>
