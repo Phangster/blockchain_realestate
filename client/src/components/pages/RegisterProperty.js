@@ -138,22 +138,21 @@ class RegisterProperty extends Component {
     const contract = new web3.eth.Contract(
       RealEstate.abi,
       deployedNetwork && deployedNetwork.address,
-    );
-    
+    )
+
     try{
       await contract.methods._createProperty(location, cost)
-    .send(
-      { from: accounts[0], gas: 800000, value: cost })
-    .then((txReceipt) =>
-      this.setState({
-        transactionHash: txReceipt.transactionHash,
-        blockNumber: txReceipt.blockNumber,
-        from: txReceipt.from,
-        createCost: cost,
-        currentState: 0,
-      })
-    );
-    console.log('state from create property', this.state)
+      .send({from: accounts[0], gas: 800000, value: web3.toWei(cost, 'ether')})
+      .then((txReceipt) =>
+        this.setState({
+          transactionHash: txReceipt.transactionHash,
+          blockNumber: txReceipt.blockNumber,
+          from: txReceipt.from,
+          createCost: cost,
+          currentState: 0,
+        })
+      );
+      console.log('state from create property', this.state)
     } catch (err) {
       console.log('errorMessage: ', err.message );
     }
@@ -170,7 +169,7 @@ class RegisterProperty extends Component {
     console.log('new owner', newOwnerAddress)
 
     try{
-      await contract.methods._transferProperty(newOwnerAddress, propertyId)
+      await contract.methods._buyAProperty(newOwnerAddress, propertyId)
     .send(
       { from: currentAddress, to: newOwnerAddress, gas: 800000, value: priceTrans})
     .then((txReceipt) =>
@@ -356,7 +355,7 @@ class RegisterProperty extends Component {
                     <div style={{padding:'0.5rem', fontSize:'2em'}}>{this.state.currentPrice}</div>
                   </div>
                   <div style={{marginTop: '20px'}}>
-                    <TextField id="filled-basic" label="To Address" variant="outlined" type="text" name="newOwnerAddress" placeholder="eg. 0x38euhfj....." value={this.state.newOwnerAddress} onChange={this.handleChangeTransferOwnership.bind(this)} />
+                    <TextField id="filled-basic" label="Seller" variant="outlined" type="text" name="newOwnerAddress" placeholder="eg. 0x38euhfj....." value={this.state.newOwnerAddress} onChange={this.handleChangeTransferOwnership.bind(this)} />
                   </div >
                   <div style={{marginTop: '20px'}}>
                     <Typography style={{marginBottom: '1rem'}}>Must be higher or equal to the current price</Typography>
